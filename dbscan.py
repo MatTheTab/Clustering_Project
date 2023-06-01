@@ -12,8 +12,9 @@ params = yaml.safe_load(open('params.yaml'))['dbscan']
 random.seed(params['seed'])
 
 input_file = Path(sys.argv[1])
+output_file = Path(sys.argv[2])
 
-model_file = 'data/models/dbscan.p'
+model_file = Path('data') / 'models' / output_file
 
 Path('data/models').mkdir(parents=True, exist_ok=True)
 
@@ -23,8 +24,6 @@ if df.columns[0] == "id":
     df=df.drop("id", axis=1)
 if df.columns[0] == "Unnamed: 0":
     df=df.drop("Unnamed: 0", axis=1)
-
-cols = df.columns
 
 model = DBSCAN(eps=params["epsilon"], min_samples=params["min_samples"])
 model.fit(df)

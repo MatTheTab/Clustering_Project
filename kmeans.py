@@ -12,6 +12,7 @@ params = yaml.safe_load(open('params.yaml'))['kmeans']
 random.seed(params['seed'])
 
 input_file = Path(sys.argv[1])
+output_file = Path(sys.argv[2])
 
 if params["silhouette_k"]:
     with open("data/prepared/s_score.txt", 'r') as kf:
@@ -22,7 +23,7 @@ elif params["davies_bouldin_k"]:
 else:
     k_clusters = params["default_k"]
 
-model_file = 'data/models/kmeans.p'
+model_file = Path('data') / 'models' / output_file
 
 Path('data/models').mkdir(parents=True, exist_ok=True)
 
