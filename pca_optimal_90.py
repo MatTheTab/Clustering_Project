@@ -33,4 +33,4 @@ transformed_data = pca.fit_transform(data)
 columns = [f'PC{i+1}' for i in range(optimal_n)]
 transformed_df = pd.DataFrame(transformed_data, columns=columns)
 
-transformed_df.to_csv('transformed_data.csv', index=False)
+transformed_df.to_csv('pca_90_output.csv', index=False)
