@@ -1,6 +1,10 @@
 preprocess:
   seed: 2
   var_threshold: 0.9
+  umap:
+    n_neighbors: 10
+    n_components: 3
+    min_dist: 0.2
 
 silhouette:
   seed: 2
