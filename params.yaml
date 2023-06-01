@@ -1,2 +1,13 @@
 preprocess:
   seed: 2
+
+silhouette:
+  seed: 2
+  metric: "cosine"
+  range_x: 2
+  range_y: 5
+
+davies_bouldin:
+  seed: 2
+  range_x: 2
+  range_y: 15
