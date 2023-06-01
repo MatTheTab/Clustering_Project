@@ -1,2 +1,3 @@
-preprocess:
+preprocess1:
   seed: 2
+  pca: 3
