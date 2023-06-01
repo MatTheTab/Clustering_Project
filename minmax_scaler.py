@@ -25,4 +25,4 @@ min_max_scaler = MinMaxScaler()
 df_scaled = min_max_scaler.fit_transform(df)
 df_scaled = pd.DataFrame(df_scaled, columns=[cols])
 
-df_scaled.to_csv(output_file)
+df_scaled.to_csv(output_file, index=False)
