@@ -1,5 +1,6 @@
 preprocess:
   seed: 2
+  var_threshold: 0.9
 
 silhouette:
   seed: 2
