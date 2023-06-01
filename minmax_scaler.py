@@ -14,7 +14,11 @@ output_file = Path('data') / 'prepared' / 'minmax_data.csv'
 
 Path('data/prepared').mkdir(parents=True, exist_ok=True)
 
-df = pd.read_csv(input_file, sep=',', index_col="id")
+df = pd.read_csv(input_file, sep=',')
+
+if df.columns[0] == "id":
+    df=df.drop("id",axis=1)
+    
 cols = df.columns
 
 min_max_scaler = MinMaxScaler()
