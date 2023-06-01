@@ -3,7 +3,7 @@ preprocess:
 
 silhouette:
   seed: 2
-  metric: "cosine"
+  metric: "euclidean"
   range_x: 2
   range_y: 5
 
@@ -11,3 +11,14 @@ davies_bouldin:
   seed: 2
   range_x: 2
   range_y: 15
+
+kmeans:
+  seed: 2
+  silhouette_k: False
+  davies_bouldin_k: True
+  default_k: 5
+
+dbscan:
+  seed: 2
+  epsilon: 0.15
+  min_samples: 3
