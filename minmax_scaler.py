@@ -17,8 +17,10 @@ Path('data/prepared').mkdir(parents=True, exist_ok=True)
 df = pd.read_csv(input_file, sep=',')
 
 if df.columns[0] == "id":
-    df=df.drop("id",axis=1)
-    
+    df=df.drop("id", axis=1)
+if df.columns[0] == "Unnamed: 0":
+    df=df.drop("Unnamed: 0", axis=1)
+
 cols = df.columns
 
 min_max_scaler = MinMaxScaler()
