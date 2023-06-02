@@ -1,0 +1,42 @@
+stages:
+  standardize:
+    cmd: python standard_scaler.py data\raw\data.csv data\prepared\standard.csv
+    deps:
+    - data\raw\data.csv
+    - standard_scaler.py
+    params:
+    - preprocess.seed
+    outs:
+    - data\prepared
+  pca_optimal:
+    cmd: python pca_optimal.py data\prepared\standard.csv data\prepared2\pca_optimal.csv
+    deps:
+    - data\prepared\standard.csv
+    - pca_optimal.py
+    params:
+    - preprocess.seed
+    - preprocess.var_threshold
+    outs:
+    - data\prepared2
+  s_score:
+    cmd: python silhouette_score.py data\prepared2\pca_optimal.csv data\scores\s_score.txt
+    deps:
+    - data\prepared2\pca_optimal.csv
+    - silhouette_score.py
+    params:
+    - silhouette.range_x
+    - silhouette.range_y
+    - silhouette.seed
+    outs:
+    - data\scores
+  kmeans:
+    cmd: python kmeans.py data\prepared2\pca_optimal.csv model4.p
+    deps:
+    - data\prepared2\pca_optimal.csv
+    - data\scores\s_score.txt
+    - kmeans.py
+    params:
+    - kmeans.seed
+    - kmeans.silhouette_k
+    outs:
+    - data\models

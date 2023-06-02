@@ -1,0 +1,42 @@
+stages:
+  standardize:
+    cmd: python standard_scaler.py data\raw\data.csv data\prepared\standard.csv
+    deps:
+    - data\raw\data.csv
+    - standard_scaler.py
+    params:
+    - preprocess.seed
+    outs:
+    - data\prepared
+  umap:
+    cmd: python unimap.py data\prepared\standard.csv data\prepared2\unimap.csv
+    deps:
+    - data\prepared\standard.csv
+    - unimap.py
+    params:
+    - preprocess.seed
+    - preprocess.umap
+    outs:
+    - data\prepared2
+  db_score:
+    cmd: python db_score.py data\prepared2\unimap.csv data\scores\db_score.txt
+    deps:
+    - data\prepared2\unimap.csv
+    - db_score.py
+    params:
+    - davies_bouldin.range_x
+    - davies_bouldin.range_y
+    - davies_bouldin.seed
+    outs:
+    - data\scores
+  kmeans:
+    cmd: python kmeans.py data\prepared2\unimap.csv model7.p
+    deps:
+    - data\prepared2\unimap.csv
+    - data\scores\db_score.txt
+    - kmeans.py
+    params:
+    - kmeans.davies_bouldin_k
+    - kmeans.seed
+    outs:
+    - data\models

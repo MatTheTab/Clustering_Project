@@ -1,0 +1,42 @@
+stages:
+  standardize:
+    cmd: python standard_scaler.py data\raw\data.csv data\prepared\standard.csv
+    deps:
+    - data\raw\data.csv
+    - standard_scaler.py
+    params:
+    - preprocess.seed
+    outs:
+    - data\prepared
+  pca_optimal:
+    cmd: python pca_optimal.py data\prepared\standard.csv data\prepared2\pca_optimal.csv
+    deps:
+    - data\prepared\standard.csv
+    - pca_optimal.py
+    params:
+    - preprocess.seed
+    - preprocess.var_threshold
+    outs:
+    - data\prepared2
+  db_score:
+    cmd: python db_score.py data\prepared2\pca_optimal.csv data\scores\db_score.txt
+    deps:
+    - data\prepared2\pca_optimal.csv
+    - db_score.py
+    params:
+    - davies_bouldin.range_x
+    - davies_bouldin.range_y
+    - davies_bouldin.seed
+    outs:
+    - data\scores
+  kmeans:
+    cmd: python kmeans.py data\prepared2\pca_optimal.csv model3.p
+    deps:
+    - data\prepared2\pca_optimal.csv
+    - data\scores\db_score.txt
+    - kmeans.py
+    params:
+    - kmeans.davies_bouldin_k
+    - kmeans.seed
+    outs:
+    - data\models

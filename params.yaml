@@ -19,8 +19,8 @@ davies_bouldin:
 
 kmeans:
   seed: 2
-  silhouette_k: False
-  davies_bouldin_k: True
+  silhouette_k: True
+  davies_bouldin_k: False
   default_k: 5
 
 dbscan:

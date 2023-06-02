@@ -1,0 +1,80 @@
+schema: '2.0'
+stages:
+  standardize:
+    cmd: python standard_scaler.py data\raw\data.csv data\prepared\standard.csv
+    deps:
+    - path: data\raw\data.csv
+      md5: b36d40ee963b3de7ba78e86d01b4004a
+      size: 43689903
+    - path: standard_scaler.py
+      md5: 57e8ac919da881ba61952678753f4e06
+      size: 792
+    params:
+      params.yaml:
+        preprocess.seed: 2
+    outs:
+    - path: data\prepared
+      md5: 0f1119b0110eb9f893be4dcb6bf44ac0.dir
+      size: 55908183
+      nfiles: 1
+  umap:
+    cmd: python unimap.py data\prepared\standard.csv data\prepared2\unimap.csv
+    deps:
+    - path: data\prepared\standard.csv
+      md5: d7139225230b9bec8907a75005e03f68
+      size: 55908183
+    - path: unimap.py
+      md5: 2eca858197008010493ceff79c592f3c
+      size: 923
+    params:
+      params.yaml:
+        preprocess.seed: 2
+        preprocess.umap:
+          n_neighbors: 10
+          n_components: 3
+          min_dist: 0.2
+    outs:
+    - path: data\prepared2
+      md5: 94b8025e866ab4b900d69201e262c123.dir
+      size: 2888643
+      nfiles: 1
+  s_score:
+    cmd: python silhouette_score.py data\prepared2\unimap.csv data\scores\s_score.txt
+    deps:
+    - path: data\prepared2\unimap.csv
+      md5: d3c22db2b131144969e2f616d5365ed3
+      size: 2888643
+    - path: silhouette_score.py
+      md5: 2bf0406b8d65d75e4ff82c4817835423
+      size: 981
+    params:
+      params.yaml:
+        silhouette.range_x: 2
+        silhouette.range_y: 5
+        silhouette.seed: 2
+    outs:
+    - path: data\scores
+      md5: 8bd7b9c83a7c20f0fd427ba966e5a5fd.dir
+      size: 1
+      nfiles: 1
+  kmeans:
+    cmd: python kmeans.py data\prepared2\unimap.csv model8.p
+    deps:
+    - path: data\prepared2\unimap.csv
+      md5: d3c22db2b131144969e2f616d5365ed3
+      size: 2888643
+    - path: data\scores\s_score.txt
+      md5: c81e728d9d4c2f636f067f89cc14862c
+      size: 1
+    - path: kmeans.py
+      md5: 3634324901af57e63f7030c832586b5a
+      size: 1015
+    params:
+      params.yaml:
+        kmeans.seed: 2
+        kmeans.silhouette_k: true
+    outs:
+    - path: data\models
+      md5: 5af45f017196c24a21da6e3c5c4a48f1.dir
+      size: 392788
+      nfiles: 1

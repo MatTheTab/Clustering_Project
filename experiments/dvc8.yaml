@@ -1,0 +1,42 @@
+stages:
+  standardize:
+    cmd: python standard_scaler.py data\raw\data.csv data\prepared\standard.csv
+    deps:
+    - data\raw\data.csv
+    - standard_scaler.py
+    params:
+    - preprocess.seed
+    outs:
+    - data\prepared
+  umap:
+    cmd: python unimap.py data\prepared\standard.csv data\prepared2\unimap.csv
+    deps:
+    - data\prepared\standard.csv
+    - unimap.py
+    params:
+    - preprocess.seed
+    - preprocess.umap
+    outs:
+    - data\prepared2
+  s_score:
+    cmd: python silhouette_score.py data\prepared2\unimap.csv data\scores\s_score.txt
+    deps:
+    - data\prepared2\unimap.csv
+    - silhouette_score.py
+    params:
+    - silhouette.range_x
+    - silhouette.range_y
+    - silhouette.seed
+    outs:
+    - data\scores
+  kmeans:
+    cmd: python kmeans.py data\prepared2\unimap.csv model8.p
+    deps:
+    - data\prepared2\unimap.csv
+    - data\scores\s_score.txt
+    - kmeans.py
+    params:
+    - kmeans.seed
+    - kmeans.silhouette_k
+    outs:
+    - data\models
