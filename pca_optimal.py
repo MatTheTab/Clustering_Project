@@ -10,12 +10,17 @@ params = yaml.safe_load(open('params.yaml'))['preprocess']
 random.seed(params['seed'])
 
 input_file = Path(sys.argv[1])
-output_file = Path('data') / 'prepared' / 'pca_optimal.csv'
+output_file = Path(sys.argv[2])
 
 Path('data/prepared').mkdir(parents=True, exist_ok=True)
+Path('data/prepared2').mkdir(parents=True, exist_ok=True)
 
 data = pd.read_csv(input_file, sep=',')
-data=data.drop(columns=["id"])
+
+if data.columns[0] == "id":
+    data=data.drop("id", axis=1)
+if data.columns[0] == "Unnamed: 0":
+    data=data.drop("Unnamed: 0", axis=1)
 
 pca = PCA()
 pca.fit(data)
@@ -33,4 +38,4 @@ transformed_data = pca.fit_transform(data)
 columns = [f'PC{i+1}' for i in range(optimal_n)]
 transformed_df = pd.DataFrame(transformed_data, columns=columns)
 
-transformed_df.to_csv('pca_90_output.csv', index=False)
+transformed_df.to_csv(output_file, index=False)

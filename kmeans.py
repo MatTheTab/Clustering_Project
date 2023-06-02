@@ -15,10 +15,10 @@ input_file = Path(sys.argv[1])
 output_file = Path(sys.argv[2])
 
 if params["silhouette_k"]:
-    with open("data/prepared/s_score.txt", 'r') as kf:
+    with open("data/scores/s_score.txt", 'r') as kf:
         k_clusters = int(kf.readline())
 elif params["davies_bouldin_k"]:
-    with open("data/prepared/db_score.txt", 'r') as kf:
+    with open("data/scores/db_score.txt", 'r') as kf:
         k_clusters = int(kf.readline())
 else:
     k_clusters = params["default_k"]

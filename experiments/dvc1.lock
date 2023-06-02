@@ -1,0 +1,77 @@
+schema: '2.0'
+stages:
+  normalize:
+    cmd: python minmax_scaler.py data\raw\data.csv data\prepared\minmax.csv
+    deps:
+    - path: data\raw\data.csv
+      md5: b36d40ee963b3de7ba78e86d01b4004a
+      size: 43689903
+    - path: minmax_scaler.py
+      md5: 474a64829a932bfc716e4e134d7a3dc6
+      size: 786
+    params:
+      params.yaml:
+        preprocess.seed: 2
+    outs:
+    - path: data\prepared
+      md5: cbccbbb2e395e4794b88474429f18848.dir
+      size: 52017796
+      nfiles: 1
+  pca_optimal:
+    cmd: python pca_optimal.py data\prepared\minmax.csv data\prepared2\pca_optimal.csv
+    deps:
+    - path: data\prepared\minmax.csv
+      md5: a55d958af95819f81b06c93cee3879e2
+      size: 52017796
+    - path: pca_optimal.py
+      md5: b2763131d2b5056ce2c09d76ea6c84ad
+      size: 1143
+    params:
+      params.yaml:
+        preprocess.seed: 2
+        preprocess.var_threshold: 0.9
+    outs:
+    - path: data\prepared2
+      md5: 5a3c361f616101ed8dea9c0c8fba590d.dir
+      size: 50523941
+      nfiles: 1
+  db_score:
+    cmd: python db_score.py data\prepared2\pca_optimal.csv data\scores\db_score.txt
+    deps:
+    - path: data\prepared2\pca_optimal.csv
+      md5: 2b038dadea57c192a328f2221780e7ec
+      size: 50523941
+    - path: db_score.py
+      md5: 4c77158ae66d222f74eed2eac0b6b80e
+      size: 968
+    params:
+      params.yaml:
+        davies_bouldin.range_x: 2
+        davies_bouldin.range_y: 15
+        davies_bouldin.seed: 2
+    outs:
+    - path: data\scores
+      md5: 94080b45042729811583caaaaefa023d.dir
+      size: 1
+      nfiles: 1
+  kmeans:
+    cmd: python kmeans.py data\prepared2\pca_optimal.csv model1.p
+    deps:
+    - path: data\prepared2\pca_optimal.csv
+      md5: 2b038dadea57c192a328f2221780e7ec
+      size: 50523941
+    - path: data\scores\db_score.txt
+      md5: e4da3b7fbbce2345d7772b0674a318d5
+      size: 1
+    - path: kmeans.py
+      md5: 3634324901af57e63f7030c832586b5a
+      size: 1015
+    params:
+      params.yaml:
+        kmeans.davies_bouldin_k: true
+        kmeans.seed: 2
+    outs:
+    - path: data\models
+      md5: 83a07048dce84536056db50c5f514614.dir
+      size: 393867
+      nfiles: 1

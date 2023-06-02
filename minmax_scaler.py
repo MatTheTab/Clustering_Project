@@ -10,9 +10,10 @@ params = yaml.safe_load(open('params.yaml'))['preprocess']
 random.seed(params['seed'])
 
 input_file = Path(sys.argv[1])
-output_file = Path('data') / 'prepared' / 'minmax_data.csv'
+output_file = Path(sys.argv[2])
 
 Path('data/prepared').mkdir(parents=True, exist_ok=True)
+Path('data/prepared2').mkdir(parents=True, exist_ok=True)
 
 df = pd.read_csv(input_file, sep=',')
 

@@ -11,9 +11,9 @@ params = yaml.safe_load(open('params.yaml'))['silhouette']
 random.seed(params['seed'])
 
 input_file = Path(sys.argv[1])
-output_file = Path('data') / 'prepared' / 's_score.txt'
+output_file = Path(sys.argv[2])
 
-Path('data/prepared').mkdir(parents=True, exist_ok=True)
+Path('data/scores').mkdir(parents=True, exist_ok=True)
 
 df = pd.read_csv(input_file, sep=',', index_col=None)
 

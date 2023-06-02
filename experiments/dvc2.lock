@@ -1,0 +1,77 @@
+schema: '2.0'
+stages:
+  normalize:
+    cmd: python minmax_scaler.py data\raw\data.csv data\prepared\minmax.csv
+    deps:
+    - path: data\raw\data.csv
+      md5: b36d40ee963b3de7ba78e86d01b4004a
+      size: 43689903
+    - path: minmax_scaler.py
+      md5: 474a64829a932bfc716e4e134d7a3dc6
+      size: 786
+    params:
+      params.yaml:
+        preprocess.seed: 2
+    outs:
+    - path: data\prepared
+      md5: cbccbbb2e395e4794b88474429f18848.dir
+      size: 52017796
+      nfiles: 1
+  pca_optimal:
+    cmd: python pca_optimal.py data\prepared\minmax.csv data\prepared2\pca_optimal.csv
+    deps:
+    - path: data\prepared\minmax.csv
+      md5: a55d958af95819f81b06c93cee3879e2
+      size: 52017796
+    - path: pca_optimal.py
+      md5: b2763131d2b5056ce2c09d76ea6c84ad
+      size: 1143
+    params:
+      params.yaml:
+        preprocess.seed: 2
+        preprocess.var_threshold: 0.9
+    outs:
+    - path: data\prepared2
+      md5: 5a3c361f616101ed8dea9c0c8fba590d.dir
+      size: 50523941
+      nfiles: 1
+  s_score:
+    cmd: python silhouette_score.py data\prepared2\pca_optimal.csv data\scores\s_score.txt
+    deps:
+    - path: data\prepared2\pca_optimal.csv
+      md5: 2b038dadea57c192a328f2221780e7ec
+      size: 50523941
+    - path: silhouette_score.py
+      md5: 2bf0406b8d65d75e4ff82c4817835423
+      size: 981
+    params:
+      params.yaml:
+        silhouette.range_x: 2
+        silhouette.range_y: 5
+        silhouette.seed: 2
+    outs:
+    - path: data\scores
+      md5: 8bd7b9c83a7c20f0fd427ba966e5a5fd.dir
+      size: 1
+      nfiles: 1
+  kmeans:
+    cmd: python kmeans.py data\prepared2\pca_optimal.csv model2.p
+    deps:
+    - path: data\prepared2\pca_optimal.csv
+      md5: 2b038dadea57c192a328f2221780e7ec
+      size: 50523941
+    - path: data\scores\s_score.txt
+      md5: c81e728d9d4c2f636f067f89cc14862c
+      size: 1
+    - path: kmeans.py
+      md5: 3634324901af57e63f7030c832586b5a
+      size: 1015
+    params:
+      params.yaml:
+        kmeans.seed: 2
+        kmeans.silhouette_k: true
+    outs:
+    - path: data\models
+      md5: 8908558eb5b78a6074ffaaf4b659b62f.dir
+      size: 393267
+      nfiles: 1
