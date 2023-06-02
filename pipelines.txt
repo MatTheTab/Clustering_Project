@@ -87,73 +87,73 @@ dvc stage add -n s_score -p silhouette.seed,silhouette.range_x,silhouette.range_
 dvc stage add -n kmeans -p kmeans.seed,kmeans.silhouette_k -d kmeans.py -d data\scores\s_score.txt -d data\prepared2\unimap.csv -o data\models python kmeans.py data\prepared2\unimap.csv model8.p
 
 ==============MODEL9===================
-minmax, optimal pca 0.9, dbscan
+minmax, optimal pca 0.9, dbscan 0.4, 5 euclidean
 
 dvc stage add -n normalize -p preprocess.seed -d minmax_scaler.py -d data\raw\data.csv -o data\prepared python minmax_scaler.py data\raw\data.csv data\prepared\minmax.csv
 
 dvc stage add -n pca_optimal -p preprocess.seed,preprocess.var_threshold -d pca_optimal.py -d data\prepared\minmax.csv -o data\prepared2 python pca_optimal.py data\prepared\minmax.csv data\prepared2\pca_optimal.csv
 
-dvc stage add -n dbscan -p dbscan.seed,dbscan.epsilon,dbscan.min_samples -d dbscan.py -d data\prepared2\pca_optimal.csv -o data\models python dbscan.py data\prepared2\pca_optimal.csv model9.p
+dvc stage add -n dbscan -p dbscan.seed,dbscan.epsilon,dbscan.min_samples,dbscan.metric -d dbscan.py -d data\prepared2\pca_optimal.csv -o data\models python dbscan.py data\prepared2\pca_optimal.csv model9.p
 
 ==============MODEL10===================
-minmax, optimal pca 0.95, dbscan
+minmax, optimal pca 0.95, dbscan 0.4, 5 euclidean
 
 dvc stage add -n normalize -p preprocess.seed -d minmax_scaler.py -d data\raw\data.csv -o data\prepared python minmax_scaler.py data\raw\data.csv data\prepared\minmax.csv
 
 dvc stage add -n pca_optimal -p preprocess.seed,preprocess.var_threshold -d pca_optimal.py -d data\prepared\minmax.csv -o data\prepared2 python pca_optimal.py data\prepared\minmax.csv data\prepared2\pca_optimal.csv
 
-dvc stage add -n dbscan -p dbscan.seed,dbscan.epsilon,dbscan.min_samples -d dbscan.py -d data\prepared2\pca_optimal.csv -o data\models python dbscan.py data\prepared2\pca_optimal.csv model10.p
+dvc stage add -n dbscan -p dbscan.seed,dbscan.epsilon,dbscan.min_samples,dbscan.metric -d dbscan.py -d data\prepared2\pca_optimal.csv -o data\models python dbscan.py data\prepared2\pca_optimal.csv model10.p
 
 ==============MODEL11===================
-standard, optimal pca 0.9, dbscan
+standard, optimal pca 0.9, dbscan 0.3 2 cosine
 
 dvc stage add -n standardize -p preprocess.seed -d standard_scaler.py -d data\raw\data.csv -o data\prepared python standard_scaler.py data\raw\data.csv data\prepared\standard.csv
 
 dvc stage add -n pca_optimal -p preprocess.seed,preprocess.var_threshold -d pca_optimal.py -d data\prepared\standard.csv -o data\prepared2 python pca_optimal.py data\prepared\standard.csv data\prepared2\pca_optimal.csv
 
-dvc stage add -n dbscan -p dbscan.seed,dbscan.epsilon,dbscan.min_samples -d dbscan.py -d data\prepared2\pca_optimal.csv -o data\models python dbscan.py data\prepared2\pca_optimal.csv model11.p
+dvc stage add -n dbscan -p dbscan.seed,dbscan.epsilon,dbscan.min_samples,dbscan.metric -d dbscan.py -d data\prepared2\pca_optimal.csv -o data\models python dbscan.py data\prepared2\pca_optimal.csv model11.p
 
 ==============MODEL12===================
-standard, optimal pca 0.95, dbscan
+standard, optimal pca 0.95, dbscan 0.32 2 cosine
 
 dvc stage add -n standardize -p preprocess.seed -d standard_scaler.py -d data\raw\data.csv -o data\prepared python standard_scaler.py data\raw\data.csv data\prepared\standard.csv
 
 dvc stage add -n pca_optimal -p preprocess.seed,preprocess.var_threshold -d pca_optimal.py -d data\prepared\standard.csv -o data\prepared2 python pca_optimal.py data\prepared\standard.csv data\prepared2\pca_optimal.csv
 
-dvc stage add -n dbscan -p dbscan.seed,dbscan.epsilon,dbscan.min_samples -d dbscan.py -d data\prepared2\pca_optimal.csv -o data\models python dbscan.py data\prepared2\pca_optimal.csv model12.p
+dvc stage add -n dbscan -p dbscan.seed,dbscan.epsilon,dbscan.min_samples,dbscan.metric -d dbscan.py -d data\prepared2\pca_optimal.csv -o data\models python dbscan.py data\prepared2\pca_optimal.csv model12.p
 
 ==============MODEL13===================
-minmax, umap 10 neighbors 3 components 0.2 min distance, dbscan
+minmax, umap 10 neighbors 3 components 0.2 min distance, dbscan 0.15, 5 euclidean
 
 dvc stage add -n normalize -p preprocess.seed -d minmax_scaler.py -d data\raw\data.csv -o data\prepared python minmax_scaler.py data\raw\data.csv data\prepared\minmax.csv
 
 dvc stage add -n umap -p preprocess.seed,preprocess.umap -d unimap.py -d data\prepared\minmax.csv -o data\prepared2 python unimap.py data\prepared\minmax.csv data\prepared2\unimap.csv
 
-dvc stage add -n dbscan -p dbscan.seed,dbscan.epsilon,dbscan.min_samples -d dbscan.py -d data\prepared2\unimap.csv -o data\models python dbscan.py data\prepared2\unimap.csv model13.p
+dvc stage add -n dbscan -p dbscan.seed,dbscan.epsilon,dbscan.min_samples,dbscan.metric -d dbscan.py -d data\prepared2\unimap.csv -o data\models python dbscan.py data\prepared2\unimap.csv model13.p
 
 ==============MODEL14===================
-minmax, umap 10 neighbors 2 components 0.2 min distance, dbscan
+minmax, umap 10 neighbors 2 components 0.2 min distance, dbscan 0.1, 5 euclidean
 
 dvc stage add -n normalize -p preprocess.seed -d minmax_scaler.py -d data\raw\data.csv -o data\prepared python minmax_scaler.py data\raw\data.csv data\prepared\minmax.csv
 
 dvc stage add -n umap -p preprocess.seed,preprocess.umap -d unimap.py -d data\prepared\minmax.csv -o data\prepared2 python unimap.py data\prepared\minmax.csv data\prepared2\unimap.csv
 
-dvc stage add -n dbscan -p dbscan.seed,dbscan.epsilon,dbscan.min_samples -d dbscan.py -d data\prepared2\unimap.csv -o data\models python dbscan.py data\prepared2\unimap.csv model14.p
+dvc stage add -n dbscan -p dbscan.seed,dbscan.epsilon,dbscan.min_samples,dbscan.metric -d dbscan.py -d data\prepared2\unimap.csv -o data\models python dbscan.py data\prepared2\unimap.csv model14.p
 
 ==============MODEL15===================
-standard, umap 10 neighbors 3 components 0.2 min distance, dbscan
+standard, umap 10 neighbors 3 components 0.2 min distance, dbscan 0.15, 5 euclidean
 
 dvc stage add -n standardize -p preprocess.seed -d standard_scaler.py -d data\raw\data.csv -o data\prepared python standard_scaler.py data\raw\data.csv data\prepared\standard.csv
 
 dvc stage add -n umap -p preprocess.seed,preprocess.umap -d unimap.py -d data\prepared\standard.csv -o data\prepared2 python unimap.py data\prepared\standard.csv data\prepared2\unimap.csv
 
-dvc stage add -n dbscan -p dbscan.seed,dbscan.epsilon,dbscan.min_samples -d dbscan.py -d data\prepared2\unimap.csv -o data\models python dbscan.py data\prepared2\unimap.csv model15.p
+dvc stage add -n dbscan -p dbscan.seed,dbscan.epsilon,dbscan.min_samples,dbscan.metric -d dbscan.py -d data\prepared2\unimap.csv -o data\models python dbscan.py data\prepared2\unimap.csv model15.p
 
 ==============MODEL16===================
-standard, umap 10 neighbors 2 components 0.2 min distance, dbscan
+standard, umap 10 neighbors 2 components 0.2 min distance, dbscan 0.1, 5 euclidean
 
 dvc stage add -n standardize -p preprocess.seed -d standard_scaler.py -d data\raw\data.csv -o data\prepared python standard_scaler.py data\raw\data.csv data\prepared\standard.csv
 
 dvc stage add -n umap -p preprocess.seed,preprocess.umap -d unimap.py -d data\prepared\standard.csv -o data\prepared2 python unimap.py data\prepared\standard.csv data\prepared2\unimap.csv
 
-dvc stage add -n dbscan -p dbscan.seed,dbscan.epsilon,dbscan.min_samples -d dbscan.py -d data\prepared2\unimap.csv -o data\models python dbscan.py data\prepared2\unimap.csv model16.p
+dvc stage add -n dbscan -p dbscan.seed,dbscan.epsilon,dbscan.min_samples,dbscan.metric -d dbscan.py -d data\prepared2\unimap.csv -o data\models python dbscan.py data\prepared2\unimap.csv model16.p

@@ -25,5 +25,6 @@ kmeans:
 
 dbscan:
   seed: 2
-  epsilon: 0.15
-  min_samples: 3
+  epsilon: 0.32
+  min_samples: 2
+  metric: "cosine"

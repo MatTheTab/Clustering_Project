@@ -49,11 +49,12 @@ stages:
       size: 750
     params:
       params.yaml:
-        dbscan.epsilon: 0.15
-        dbscan.min_samples: 3
+        dbscan.epsilon: 0.1
+        dbscan.metric: euclidean
+        dbscan.min_samples: 5
         dbscan.seed: 2
     outs:
     - path: data\models
-      md5: e9151252153578706edd26448259a3d4.dir
-      size: 3136442
+      md5: c02943601efccfa10ee0cf47055cbc1c.dir
+      size: 3133874
       nfiles: 1

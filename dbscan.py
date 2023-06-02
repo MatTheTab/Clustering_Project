@@ -25,7 +25,7 @@ if df.columns[0] == "id":
 if df.columns[0] == "Unnamed: 0":
     df=df.drop("Unnamed: 0", axis=1)
 
-model = DBSCAN(eps=params["epsilon"], min_samples=params["min_samples"])
+model = DBSCAN(eps=params["epsilon"], min_samples=params["min_samples"], metric=params["metric"])
 model.fit(df)
 
 with open(model_file, 'wb') as f:

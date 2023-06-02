@@ -42,15 +42,16 @@ stages:
       md5: bbbed8628c5840431ecfab26684f1c99
       size: 48184664
     - path: dbscan.py
-      md5: 15d640f2724a0adc9f1f02c4b2b7cb13
-      size: 750
+      md5: 8f6a1df0b26bfaabb1330c92c98217b6
+      size: 775
     params:
       params.yaml:
-        dbscan.epsilon: 0.15
-        dbscan.min_samples: 3
+        dbscan.epsilon: 0.3
+        dbscan.metric: cosine
+        dbscan.min_samples: 2
         dbscan.seed: 2
     outs:
     - path: data\models
-      md5: f8499292799b57db476f6038ad4013da.dir
-      size: 784765
+      md5: 6e3189baf12554b8b1fc51f141186349.dir
+      size: 20690601
       nfiles: 1

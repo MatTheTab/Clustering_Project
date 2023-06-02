@@ -25,6 +25,7 @@ stages:
     - dbscan.py
     params:
     - dbscan.epsilon
+    - dbscan.metric
     - dbscan.min_samples
     - dbscan.seed
     outs:
