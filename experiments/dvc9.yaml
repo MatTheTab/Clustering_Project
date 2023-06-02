@@ -1,0 +1,31 @@
+stages:
+  normalize:
+    cmd: python minmax_scaler.py data\raw\data.csv data\prepared\minmax.csv
+    deps:
+    - data\raw\data.csv
+    - minmax_scaler.py
+    params:
+    - preprocess.seed
+    outs:
+    - data\prepared
+  pca_optimal:
+    cmd: python pca_optimal.py data\prepared\minmax.csv data\prepared2\pca_optimal.csv
+    deps:
+    - data\prepared\minmax.csv
+    - pca_optimal.py
+    params:
+    - preprocess.seed
+    - preprocess.var_threshold
+    outs:
+    - data\prepared2
+  dbscan:
+    cmd: python dbscan.py data\prepared2\pca_optimal.csv model9.p
+    deps:
+    - data\prepared2\pca_optimal.csv
+    - dbscan.py
+    params:
+    - dbscan.epsilon
+    - dbscan.min_samples
+    - dbscan.seed
+    outs:
+    - data\models

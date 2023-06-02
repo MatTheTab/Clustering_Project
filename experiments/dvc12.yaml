@@ -1,0 +1,31 @@
+stages:
+  standardize:
+    cmd: python standard_scaler.py data\raw\data.csv data\prepared\standard.csv
+    deps:
+    - data\raw\data.csv
+    - standard_scaler.py
+    params:
+    - preprocess.seed
+    outs:
+    - data\prepared
+  pca_optimal:
+    cmd: python pca_optimal.py data\prepared\standard.csv data\prepared2\pca_optimal.csv
+    deps:
+    - data\prepared\standard.csv
+    - pca_optimal.py
+    params:
+    - preprocess.seed
+    - preprocess.var_threshold
+    outs:
+    - data\prepared2
+  dbscan:
+    cmd: python dbscan.py data\prepared2\pca_optimal.csv model12.p
+    deps:
+    - data\prepared2\pca_optimal.csv
+    - dbscan.py
+    params:
+    - dbscan.epsilon
+    - dbscan.min_samples
+    - dbscan.seed
+    outs:
+    - data\models

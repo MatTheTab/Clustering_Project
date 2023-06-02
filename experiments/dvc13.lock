@@ -1,0 +1,59 @@
+schema: '2.0'
+stages:
+  normalize:
+    cmd: python minmax_scaler.py data\raw\data.csv data\prepared\minmax.csv
+    deps:
+    - path: data\raw\data.csv
+      md5: b36d40ee963b3de7ba78e86d01b4004a
+      size: 43689903
+    - path: minmax_scaler.py
+      md5: 474a64829a932bfc716e4e134d7a3dc6
+      size: 786
+    params:
+      params.yaml:
+        preprocess.seed: 2
+    outs:
+    - path: data\prepared
+      md5: cbccbbb2e395e4794b88474429f18848.dir
+      size: 52017796
+      nfiles: 1
+  umap:
+    cmd: python unimap.py data\prepared\minmax.csv data\prepared2\unimap.csv
+    deps:
+    - path: data\prepared\minmax.csv
+      md5: a55d958af95819f81b06c93cee3879e2
+      size: 52017796
+    - path: unimap.py
+      md5: 2eca858197008010493ceff79c592f3c
+      size: 923
+    params:
+      params.yaml:
+        preprocess.seed: 2
+        preprocess.umap:
+          n_neighbors: 10
+          n_components: 3
+          min_dist: 0.2
+    outs:
+    - path: data\prepared2
+      md5: 7aff1d52390551a8c1c9be1780dff449.dir
+      size: 2880279
+      nfiles: 1
+  dbscan:
+    cmd: python dbscan.py data\prepared2\unimap.csv model13.p
+    deps:
+    - path: data\prepared2\unimap.csv
+      md5: d855286886c10fb688c3086f0710a28d
+      size: 2880279
+    - path: dbscan.py
+      md5: 15d640f2724a0adc9f1f02c4b2b7cb13
+      size: 750
+    params:
+      params.yaml:
+        dbscan.epsilon: 0.15
+        dbscan.min_samples: 3
+        dbscan.seed: 2
+    outs:
+    - path: data\models
+      md5: 89b044125023c3d5b2f28e38a42e68d4.dir
+      size: 3906688
+      nfiles: 1
