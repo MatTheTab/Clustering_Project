@@ -6,8 +6,8 @@ The project utilizes a Data Version Control (DVC) repository to manage the datas
 
 Key Features and Components:
 
-Clustering Algorithms: The project implements multiple clustering algorithms, such as K-means and DBSCAN. Each algorithm is explored with different hyperparameters to evaluate their performance and identify optimal settings.
-Data Preprocessing: Prior to clustering, the dataset undergoes preprocessing steps, including data cleaning, feature scaling, and feature selection as necessary.
+Clustering Algorithms: The project implements multiple clustering algorithms, such as K-means and DBSCAN. Each algorithm is explored with different hyperparameters to evaluate their performance and identify optimal settings. <br>
+Data Preprocessing: Prior to clustering, the dataset undergoes preprocessing steps, including data cleaning, feature scaling, and feature selection as necessary. <br>
 Evaluation Metrics: The project employs various evaluation metrics to assess the quality of clustering results, such as silhouette score.
-Hyperparameter Optimization: Different hyperparameter settings with search implemented using DVC pipeline.
-DVC Repository: The project leverages a DVC repository for version control of the dataset and to manage the experiment tracking, allowing for easy reproduction and sharing of results.
+Hyperparameter Optimization: Different hyperparameter settings with search implemented using DVC pipeline. <br>
+DVC Repository: The project leverages a DVC repository for version control of the dataset and to manage the experiment tracking, allowing for easy reproduction and sharing of results. <br>
